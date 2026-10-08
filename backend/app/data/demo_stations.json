@@ -1,0 +1,98 @@
+[
+  {
+    "id": "STATION-F01",
+    "name": "Aravalli Range Forest Post",
+    "latitude": 28.34,
+    "longitude": 77.10,
+    "district": "Gurugram",
+    "state": "Haryana",
+    "type": "RANGE_HEADQUARTERS",
+    "capacity": 8,
+    "resources_available": 6,
+    "contact": "+91-124-2224501"
+  },
+  {
+    "id": "STATION-F02",
+    "name": "Sariska Division Forest Station",
+    "latitude": 27.34,
+    "longitude": 76.42,
+    "district": "Alwar",
+    "state": "Rajasthan",
+    "type": "TIGER_RESERVE_POST",
+    "capacity": 7,
+    "resources_available": 5,
+    "contact": "+91-144-2412802"
+  },
+  {
+    "id": "STATION-F03",
+    "name": "Corbett Tiger Reserve Fire Post",
+    "latitude": 29.51,
+    "longitude": 78.75,
+    "district": "Nainital",
+    "state": "Uttarakhand",
+    "type": "TIGER_RESERVE_POST",
+    "capacity": 9,
+    "resources_available": 7,
+    "contact": "+91-5947-251203"
+  },
+  {
+    "id": "STATION-F04",
+    "name": "Dudhwa Range Fire Post",
+    "latitude": 28.48,
+    "longitude": 80.60,
+    "district": "Lakhimpur Kheri",
+    "state": "Uttar Pradesh",
+    "type": "RANGE_HEADQUARTERS",
+    "capacity": 6,
+    "resources_available": 5,
+    "contact": "+91-5872-252104"
+  },
+  {
+    "id": "STATION-F05",
+    "name": "Ranthambore Range Forest Base",
+    "latitude": 26.03,
+    "longitude": 76.48,
+    "district": "Sawai Madhopur",
+    "state": "Rajasthan",
+    "type": "TIGER_RESERVE_POST",
+    "capacity": 6,
+    "resources_available": 5,
+    "contact": "+91-7462-220105"
+  },
+  {
+    "id": "STATION-F06",
+    "name": "Rajaji Division Forest Post",
+    "latitude": 30.06,
+    "longitude": 78.20,
+    "district": "Haridwar",
+    "state": "Uttarakhand",
+    "type": "NATIONAL_PARK_POST",
+    "capacity": 8,
+    "resources_available": 6,
+    "contact": "+91-1334-226106"
+  },
+  {
+    "id": "STATION-F07",
+    "name": "Kalesar Forest Range Post",
+    "latitude": 30.32,
+    "longitude": 77.55,
+    "district": "Yamunanagar",
+    "state": "Haryana",
+    "type": "RANGE_HEADQUARTERS",
+    "capacity": 5,
+    "resources_available": 4,
+    "contact": "+91-1732-260107"
+  },
+  {
+    "id": "STATION-F08",
+    "name": "Asola Ridge Patrol Post",
+    "latitude": 28.50,
+    "longitude": 77.26,
+    "district": "South Delhi",
+    "state": "Delhi",
+    "type": "WILDLIFE_SANCTUARY_POST",
+    "capacity": 5,
+    "resources_available": 4,
+    "contact": "+91-11-26048108"
+  }
+]
