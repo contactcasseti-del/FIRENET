@@ -76,9 +76,9 @@ def calculate_spread(
         "mixed_vegetation": 1.2,
         "scrubland": 1.3,
         "agricultural": 1.0,
-        "urban_fringe": 0.7,
-        "industrial": 0.5,
-        "urban": 0.4,
+        "bamboo_brake": 1.35,
+        "dense_canopy": 1.45,
+        "pine_needle_duff": 1.6,
         "water": 0.0,
         "unknown": 1.0,
     }

@@ -31,6 +31,9 @@ export interface FireHotspot {
   fuel_type?: string;
   terrain_type?: string;
   ecosystem_zone?: string;
+  forest_division?: string;
+  estimated_forest_area_ha?: number;
+  is_simulated?: boolean;
 }
 
 export interface Station {

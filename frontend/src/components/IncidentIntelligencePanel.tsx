@@ -55,17 +55,27 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
 
   // Structured Risk Factor Breakdown
   const riskFactors = [
-    { label: 'Fire Intensity', value: `${fire.frp} MW`, score: Math.min(100, (fire.frp / 80) * 100), color: '#dc2626' },
-    { label: 'Population Exposure', value: `${fire.population_at_risk.toLocaleString()} people`, score: Math.min(100, (fire.population_at_risk / 3500) * 100), color: '#ea580c' },
-    { label: 'Spread Risk', value: fire.spread_risk === 'HIGH' ? 'High' : fire.spread_risk === 'MEDIUM' ? 'Moderate' : 'Low', score: fire.spread_risk === 'HIGH' ? 85 : 50, color: '#d97706' },
-    { label: 'Infrastructure Risk', value: fire.infrastructure_risk === 'HIGH' ? 'High' : fire.infrastructure_risk === 'MEDIUM' ? 'Moderate' : 'Low', score: fire.infrastructure_risk === 'HIGH' ? 80 : 45, color: '#d97706' },
-    { label: 'Response Accessibility', value: allocation ? `${allocation.eta_minutes.toFixed(1)}m ETA` : '15.0m ETA', score: 75, color: '#2563eb' },
+    { label: 'Thermal Anomaly (FRP)', value: `${fire.frp} MW`, score: Math.min(100, (fire.frp / 80) * 100), color: '#dc2626' },
+    { label: 'Settlement Exposure', value: `${fire.population_at_risk.toLocaleString()} residents in hamlets`, score: Math.min(100, (fire.population_at_risk / 1500) * 100), color: '#ea580c' },
+    { label: 'Estimated Forest Area at Risk', value: `${fire.estimated_forest_area_ha || 350} hectares`, score: Math.min(100, ((fire.estimated_forest_area_ha || 350) / 500) * 100), color: '#d97706' },
+    { label: 'Spread Risk & Wind Vector', value: `${fire.spread_risk} (${fire.wind_speed} km/h @ ${fire.wind_direction}°)`, score: fire.spread_risk === 'HIGH' ? 85 : 50, color: '#d97706' },
+    { label: 'Terrain & Track Accessibility', value: allocation ? `${allocation.eta_minutes.toFixed(1)}m ETA via ${road_blocked ? 'Perimeter Firebreak' : 'Ridge Trail'}` : '15.0m ETA', score: road_blocked ? 85 : 65, color: '#2563eb' },
   ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', background: '#ffffff' }}>
       {/* Panel Top Header */}
-      <div style={{ padding: '14px 16px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
+      <div style={{ padding: '12px 16px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
+        {/* Simulation Notice Banner */}
+        <div style={{
+          background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 4,
+          padding: '4px 8px', marginBottom: 8, fontSize: 9.5, color: '#1e40af', fontWeight: 600,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
+          <span>⚠️ SIMULATED INCIDENT TELEMETRY</span>
+          <span style={{ fontSize: 9, color: '#64748b' }}>Decision-Support Scenario</span>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span className="font-mono-num" style={{ fontSize: 16, fontWeight: 900, color: '#0f172a' }}>
@@ -100,7 +110,7 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
           {fire.area_name}
         </div>
         <div className="font-mono-num" style={{ fontSize: 11, color: '#64748b' }}>
-          {fire.latitude.toFixed(4)}°N, {fire.longitude.toFixed(4)}°E • Satellite: {fire.satellite} ({fire.instrument})
+          {fire.latitude.toFixed(4)}°N, {fire.longitude.toFixed(4)}°E • Simulated Sensor: {fire.satellite} ({fire.instrument})
         </div>
       </div>
 
@@ -114,7 +124,7 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             <span style={{ fontSize: 10.5, fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Thermal Sensor Verification
+              Thermal Sensor Telemetry (Simulated)
             </span>
             <span className="badge badge-verified font-mono-num" style={{ fontSize: 11 }}>
               {verification?.score ? `${verification.score.toFixed(0)}% Confidence` : `${fire.confidence}%`}
@@ -126,12 +136,14 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, fontSize: 11, color: '#475569' }}>
-            <div>Thermal FRP: <strong className="font-mono-num" style={{ color: '#dc2626' }}>{fire.frp} MW</strong></div>
-            <div>Satellite Conf: <strong className="font-mono-num" style={{ color: '#16a34a' }}>{fire.confidence}%</strong></div>
-            <div>Fuel Type: <strong style={{ color: '#0f172a' }}>{fire.fuel_type || fire.land_cover.replace('_', ' ')}</strong></div>
-            <div>Terrain: <strong style={{ color: '#0f172a' }}>{fire.terrain_type || 'Forest Ridge'}</strong></div>
-            <div>Ecosystem: <strong style={{ color: '#b45309' }}>{fire.ecosystem_zone || 'Wildlife Corridor'}</strong></div>
-            <div>Humidity / Temp: <strong className="font-mono-num" style={{ color: '#0f172a' }}>{fire.humidity}% • {fire.temperature}°C</strong></div>
+            <div>Thermal Anomaly: <strong className="font-mono-num" style={{ color: '#dc2626' }}>{fire.frp} MW</strong></div>
+            <div>Brightness Temp: <strong className="font-mono-num">{fire.brightness || 344} K</strong></div>
+            <div>Vegetation / Fuel: <strong style={{ color: '#0f172a' }}>{fire.fuel_type || 'Dry Deciduous Leaf Duff'}</strong></div>
+            <div>Terrain Access: <strong style={{ color: '#0f172a' }}>{fire.terrain_type || 'Forest Ridge Track'}</strong></div>
+            <div>Ecosystem Zone: <strong style={{ color: '#b45309' }}>{fire.ecosystem_zone || 'Wildlife Buffer'}</strong></div>
+            <div>Wind Vector: <strong className="font-mono-num" style={{ color: '#0f172a' }}>{fire.wind_speed} km/h @ {fire.wind_direction}°</strong></div>
+            <div>Exposed Forest: <strong className="font-mono-num" style={{ color: '#15803d' }}>~{fire.estimated_forest_area_ha || 350} ha</strong></div>
+            <div>Relative Humidity: <strong className="font-mono-num">{fire.humidity}% ({fire.temperature}°C)</strong></div>
           </div>
         </div>
 
@@ -143,7 +155,7 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
             <div>
               <div style={{ fontSize: 10, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                Fire Risk Score
+                Forest Fire Risk Assessment
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginTop: 2 }}>
                 <span className="font-mono-num" style={{ fontSize: 24, fontWeight: 900, color: '#dc2626' }}>
@@ -180,15 +192,15 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             <span style={{ fontSize: 10.5, fontWeight: 700, color: '#92400e', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              Estimated Fire Spread-Risk Zone
+              Estimated Wildfire Spread-Risk Envelope
             </span>
             <span className="badge badge-warning" style={{ fontSize: 10 }}>
-              {spread?.spread_risk || fire.spread_risk} SPREAD
+              {spread?.spread_risk || fire.spread_risk} SPREAD RISK
             </span>
           </div>
 
           <div style={{ fontSize: 11, color: '#78350f', lineHeight: 1.4, marginBottom: 8 }}>
-            Simulated spread risk driven by <strong>{fire.wind_speed} km/h</strong> wind vector ({fire.wind_direction}°), fuel type (<strong>{fire.land_cover.replace('_', ' ')}</strong>), and <strong>{fire.frp} MW</strong> thermal intensity.
+            Simulated spread risk driven by <strong>{fire.wind_speed} km/h</strong> wind vector ({fire.wind_direction}°), fuel type (<strong>{fire.fuel_type || fire.land_cover}</strong>), and <strong>{fire.frp} MW</strong> thermal intensity.
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, textAlign: 'center', marginBottom: 6 }}>
@@ -198,13 +210,13 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
                 <div className="font-mono-num" style={{ fontSize: 13, fontWeight: 800, color: '#0f172a' }}>
                   {zone.radius_km.toFixed(1)} km
                 </div>
-                <div style={{ color: '#78350f', fontSize: 9 }}>estimate</div>
+                <div style={{ color: '#78350f', fontSize: 9 }}>estimated buffer</div>
               </div>
             ))}
           </div>
 
           <div style={{ fontSize: 9.5, color: '#92400e', fontStyle: 'italic', marginTop: 4 }}>
-            * Operational decision-support estimate based on atmospheric heuristics, not a guaranteed fire trajectory.
+            * Operational decision-support estimate based on heuristic atmospheric inputs; not a scientifically validated live propagation forecast.
           </div>
         </div>
 
@@ -374,12 +386,12 @@ export const IncidentIntelligencePanel: React.FC<Props> = ({
                     }}
                   >
                     {authorized
-                      ? `✓ Dispatch Authorized by Operator — Unit ${allocation.recommended_unit} Dispatched`
-                      : 'Recommend Dispatch — Human Authorization'}
+                      ? `✓ Simulated Dispatch Authorized by Forest Officer — Unit ${allocation.recommended_unit} Deployed`
+                      : 'Authorize Wildfire Unit Dispatch (Simulation)'}
                   </button>
 
                   <div style={{ fontSize: 9.5, color: '#64748b', textAlign: 'center', marginTop: 6, lineHeight: 1.3 }}>
-                    FIRENET is a decision-support system. All emergency resource dispatches require human authorization.
+                    FIRENET is an operational decision-support system. Simulated emergency resource dispatches require explicit human operator authorization.
                   </div>
                 </div>
               </div>

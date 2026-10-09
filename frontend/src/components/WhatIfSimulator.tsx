@@ -174,7 +174,7 @@ export const WhatIfSimulator: React.FC<Props> = ({ simState, onStateChange }) =>
       setDelta({
         action: 'reset',
         scenarioTitle: 'Baseline Restored',
-        explanation: 'Scenario reset to baseline FIRE-201 forest fire state. All wildland units and response corridors cleared.',
+        explanation: 'Scenario reset to baseline FIRE-101 forest fire state (Aravalli Forest Range). All wildland units and response corridors cleared.',
       });
       onStateChange();
     } catch (err) {

@@ -51,11 +51,24 @@ export const IncidentList: React.FC<Props> = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#ffffff' }}>
       {/* Incident Queue Header */}
-      <div style={{ padding: '14px 16px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+      <div style={{ padding: '12px 14px', borderBottom: '1px solid #e2e8f0', background: '#fafbfc' }}>
+        {/* Simulation Disclaimer Ribbon */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: 4,
+          padding: '3px 8px', marginBottom: 8, fontSize: 9.5, color: '#475569', fontWeight: 600
+        }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#3b82f6', display: 'inline-block' }} />
+            SIMULATED FOREST FIRE SCENARIOS
+          </span>
+          <span style={{ color: '#94a3b8' }}>Demo Data</span>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: '#0f172a' }}>
-              Active Fire Incidents
+              Forest Fire Queue
             </span>
             <span style={{
               fontSize: 11, fontWeight: 700, padding: '1px 7px', borderRadius: 10,
@@ -65,19 +78,19 @@ export const IncidentList: React.FC<Props> = ({
             </span>
           </div>
 
-          <div style={{ display: 'flex', gap: 6 }}>
-            <span className="badge badge-critical font-mono-num">{criticalCount} Critical</span>
-            <span className="badge badge-warning font-mono-num">{highCount} High</span>
+          <div style={{ display: 'flex', gap: 5 }}>
+            <span className="badge badge-critical font-mono-num" style={{ fontSize: 9.5 }}>{criticalCount} Critical</span>
+            <span className="badge badge-warning font-mono-num" style={{ fontSize: 9.5 }}>{highCount} High</span>
           </div>
         </div>
 
         {/* Sort Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
-          <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600, marginRight: 2 }}>Sort:</span>
+          <span style={{ fontSize: 10.5, color: '#64748b', fontWeight: 600, marginRight: 2 }}>Sort:</span>
           {(['risk', 'population', 'spread_risk', 'eta'] as const).map(key => {
             const labels: Record<string, string> = {
               risk: 'Fire Risk',
-              population: 'Population Exposure',
+              population: 'Village Pop',
               spread_risk: 'Spread Risk',
               eta: 'ETA',
             };
@@ -87,9 +100,9 @@ export const IncidentList: React.FC<Props> = ({
                 key={key}
                 onClick={() => onSortChange(key)}
                 style={{
-                  fontSize: 10.5,
+                  fontSize: 10,
                   fontWeight: 600,
-                  padding: '3px 7px',
+                  padding: '2px 6px',
                   borderRadius: 4,
                   border: active ? '1.5px solid #2563eb' : '1px solid #cbd5e1',
                   background: active ? '#eff6ff' : '#ffffff',
@@ -118,7 +131,7 @@ export const IncidentList: React.FC<Props> = ({
               key={fire.id}
               onClick={() => onSelectFire(fire.id)}
               style={{
-                padding: '12px 14px',
+                padding: '11px 12px',
                 marginBottom: 8,
                 borderRadius: 6,
                 cursor: 'pointer',
@@ -130,25 +143,31 @@ export const IncidentList: React.FC<Props> = ({
             >
               {/* Row 1: ID, Status, Severity Badge, Spread indicator */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                   <span className="font-mono-num" style={{ fontSize: 13, fontWeight: 800, color: '#0f172a' }}>
                     {fire.id}
+                  </span>
+                  <span style={{
+                    fontSize: 8.5, fontWeight: 700, padding: '0 4px', borderRadius: 2,
+                    background: '#f1f5f9', color: '#64748b', border: '1px solid #e2e8f0'
+                  }}>
+                    SIMULATED
                   </span>
                   {fire.status === 'ACTIVE' ? (
                     <span style={{
                       width: 7, height: 7, borderRadius: '50%',
                       background: isCritical ? '#dc2626' : isHigh ? '#ea580c' : '#eab308',
                       display: 'inline-block'
-                    }} title="Active Fire Incident" />
+                    }} title="Active Wildfire Incident" />
                   ) : (
-                    <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600 }}>[MONITORING]</span>
+                    <span style={{ fontSize: 9, color: '#64748b', fontWeight: 600 }}>[MONITORED]</span>
                   )}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                   <span
                     className={fire.spread_risk === 'HIGH' ? 'badge badge-warning' : 'badge badge-neutral'}
-                    style={{ fontSize: 9, padding: '1px 5px' }}
+                    style={{ fontSize: 8.5, padding: '1px 4px' }}
                   >
                     {formatSpread(fire.spread_risk)}
                   </span>
@@ -163,7 +182,8 @@ export const IncidentList: React.FC<Props> = ({
                         : 'badge badge-neutral'
                     }
                     style={{
-                      fontSize: 9,
+                      fontSize: 8.5,
+                      padding: '1px 4px',
                       background: isModerate ? '#fef9c3' : undefined,
                       borderColor: isModerate ? '#fde047' : undefined,
                       color: isModerate ? '#a16207' : undefined,
@@ -174,12 +194,12 @@ export const IncidentList: React.FC<Props> = ({
                 </div>
               </div>
 
-              {/* Row 2: Location Name */}
+              {/* Row 2: Forest Name & Division */}
               <div style={{
                 fontSize: 12,
-                fontWeight: 600,
+                fontWeight: 700,
                 color: '#1e293b',
-                marginBottom: 6,
+                marginBottom: 2,
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis'
@@ -187,13 +207,48 @@ export const IncidentList: React.FC<Props> = ({
                 {fire.area_name}
               </div>
 
-              {/* Row 3: Operational Telemetry Bar */}
+              {/* Row 3: Forest Ecosystem Exposure */}
+              <div style={{
+                fontSize: 10,
+                color: '#64748b',
+                marginBottom: 6,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                🌲 {fire.ecosystem_zone || fire.fuel_type || 'Forest Division Buffer'}
+              </div>
+
+              {/* Row 4: Detection status & Response unit */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: 10,
+                color: '#475569',
+                marginBottom: 6,
+                background: '#f8fafc',
+                padding: '3px 6px',
+                borderRadius: 4,
+                border: '1px solid #f1f5f9',
+              }}>
+                <span title="Sensor Verification Status">
+                  🛰️ <strong className="font-mono-num">{fire.verification_score || fire.confidence}%</strong> Conf ({fire.satellite})
+                </span>
+                <span>
+                  🚒 <strong style={{ color: fire.assigned_unit ? '#2563eb' : '#64748b' }}>
+                    {fire.assigned_unit ? `${fire.assigned_unit} Unit` : 'Unit Standby'}
+                  </strong>
+                </span>
+              </div>
+
+              {/* Row 5: Operational Telemetry Bar (Risk, Villages pop, ETA) */}
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: 4,
-                fontSize: 10.5,
-                paddingTop: 6,
+                fontSize: 10,
+                paddingTop: 5,
                 borderTop: '1px solid #f1f5f9',
                 color: '#64748b',
               }}>
@@ -201,11 +256,11 @@ export const IncidentList: React.FC<Props> = ({
                   Risk <strong className="font-mono-num" style={{ color: isCritical ? '#dc2626' : '#d97706', fontWeight: 800 }}>
                     {fire.risk_score.toFixed(0)}
                   </strong>
-                  <span style={{ fontSize: 9, color: '#94a3b8' }}>/100</span>
+                  <span style={{ fontSize: 8.5, color: '#94a3b8' }}>/100</span>
                 </div>
 
                 <div>
-                  Pop <strong className="font-mono-num" style={{ color: '#0f172a', fontWeight: 700 }}>
+                  Villages <strong className="font-mono-num" style={{ color: '#0f172a', fontWeight: 700 }}>
                     {fire.population_at_risk.toLocaleString()}
                   </strong>
                 </div>
@@ -222,7 +277,7 @@ export const IncidentList: React.FC<Props> = ({
 
         {fires.length === 0 && (
           <div style={{ textAlign: 'center', color: '#64748b', padding: 32, fontSize: 12 }}>
-            No active fire incidents detected.
+            No active forest fire incidents detected.
           </div>
         )}
       </div>

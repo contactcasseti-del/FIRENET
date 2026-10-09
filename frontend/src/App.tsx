@@ -28,7 +28,7 @@ export default function App() {
   const [fires, setFires] = useState<FireHotspot[]>([]);
   const [stations, setStations] = useState<Station[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
-  const [selectedFireId, setSelectedFireId] = useState<string>('FIRE-201');
+  const [selectedFireId, setSelectedFireId] = useState<string>('FIRE-101');
   const [intelligence, setIntelligence] = useState<IncidentIntelligence | null>(null);
   const [simState, setSimState] = useState<SimulationState | null>(null);
   const [loadingIntel, setLoadingIntel] = useState<boolean>(false);
@@ -109,7 +109,7 @@ export default function App() {
   const handleResetScenario = async () => {
     try {
       await resetScenario();
-      setSelectedFireId('FIRE-201');
+      setSelectedFireId('FIRE-101');
       await handleSimulationStateChange();
     } catch (err) {
       console.error('Failed to reset scenario:', err);
@@ -152,7 +152,7 @@ export default function App() {
                   FIRENET
                 </span>
                 <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600 }}>
-                  // AI-Powered Forest Fire Emergency Response & Coordination System
+                  // AI-Powered Forest Fire Detection, Risk Assessment & Emergency Response Coordination
                 </span>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function App() {
           </span>
 
           <span className="badge badge-warning font-mono-num" style={{ padding: '3px 8px' }}>
-            {highCount} High Risk
+            {highCount} High-Risk Forest Zones
           </span>
 
           {roadBlocked ? (
@@ -180,7 +180,7 @@ export default function App() {
             </span>
           ) : (
             <span className="badge badge-neutral font-mono-num" style={{ padding: '3px 8px' }}>
-              Corridors Clear
+              Forest Corridors Clear
             </span>
           )}
 
@@ -239,7 +239,7 @@ export default function App() {
 
           <button
             onClick={handleResetScenario}
-            title="Reset scenario to baseline FIRE-201 forest fire state"
+            title="Reset scenario to baseline FIRE-101 forest fire state"
             className="btn-tactical btn-hazard"
             style={{ height: 30, padding: '0 12px', fontSize: 11 }}
           >
