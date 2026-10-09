@@ -58,9 +58,9 @@ def calculate_verification(
         "mixed_vegetation": 9.0,
         "scrubland": 8.0,
         "agricultural": 7.0,
-        "urban_fringe": 5.0,
-        "industrial": 4.0,
-        "urban": 3.0,
+        "bamboo_brake": 8.5,
+        "dense_canopy": 9.5,
+        "pine_needle_duff": 10.0,
         "water": 0.0,
         "unknown": 4.0,
     }

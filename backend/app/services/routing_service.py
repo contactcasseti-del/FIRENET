@@ -57,8 +57,8 @@ def _interpolate_alt_route(
 
 # Road network multiplier: straight-line to road-network distance ratio
 ROAD_NETWORK_MULTIPLIER = 1.35
-# Average urban traffic speed factor
-URBAN_SPEED_FACTOR = 0.75
+# Forest terrain and access track speed factor
+FOREST_TERRAIN_SPEED_FACTOR = 0.75
 
 
 def calculate_route(
@@ -79,7 +79,7 @@ def calculate_route(
     straight_km = haversine_km(resource_lat, resource_lon, fire_lat, fire_lon)
     road_km = straight_km * ROAD_NETWORK_MULTIPLIER
 
-    effective_speed = speed_kmh * URBAN_SPEED_FACTOR
+    effective_speed = speed_kmh * FOREST_TERRAIN_SPEED_FACTOR
     eta_minutes = (road_km / effective_speed) * 60.0
 
     waypoints = _interpolate_route(resource_lat, resource_lon, fire_lat, fire_lon)

@@ -23,7 +23,7 @@ LAND_COVER_CAPABILITY = {
     "scrubland": {"wildland_suppression": 1.5, "rapid_containment": 1.4, "rough_terrain": 1.2},
     "mixed_vegetation": {"wildland_suppression": 1.4, "water_supply": 1.2},
     "agricultural": {"water_supply": 1.5, "wildland_suppression": 1.0},
-    "urban_fringe": {"wildland_suppression": 1.2, "rapid_containment": 1.0},
+    "forest_fringe": {"wildland_suppression": 1.2, "rapid_containment": 1.0},
 }
 
 HIGH_POPULATION_CAPABILITIES = {"wildland_rescue", "rapid_containment", "evacuation"}

@@ -27,7 +27,7 @@ class SimulateFireRequest(BaseModel):
 @router.post("/disable-unit")
 async def disable_unit(req: DisableUnitRequest):
     """Mark a unit as unavailable and recalculate response plan."""
-    fire = simulation_state.get_fire("FIRE-201")
+    fire = simulation_state.get_fire("FIRE-101")
     resources = simulation_state.get_resources()
 
     # Before state
@@ -45,7 +45,7 @@ async def disable_unit(req: DisableUnitRequest):
         "event": f"Response plan recalculated",
         "detail": f"Unit {req.unit_id} unavailable — {after_alloc.recommended_unit if after_alloc else 'No unit'} now recommended",
         "icon": "recalculate",
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
     })
 
     return {
@@ -76,7 +76,7 @@ async def enable_unit(req: DisableUnitRequest):
 @router.post("/block-road")
 async def block_road():
     """Block primary forest route and recalculate routes."""
-    fire = simulation_state.get_fire("FIRE-201")
+    fire = simulation_state.get_fire("FIRE-101")
     resources = simulation_state.get_resources()
     disabled = list(simulation_state.disabled_units)
 
@@ -89,7 +89,7 @@ async def block_road():
         "event": "Forest access trail blocked — alternative firebreak route active",
         "detail": f"Primary forest corridor blocked. New ETA: {after_alloc.eta_minutes:.1f} min via alternative firebreak route",
         "icon": "block",
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
     })
 
     return {
@@ -118,7 +118,7 @@ async def unblock_road():
 @router.post("/increase-wind")
 async def increase_wind():
     simulation_state.increase_wind()
-    fire = simulation_state.get_fire("FIRE-201")
+    fire = simulation_state.get_fire("FIRE-101")
     spread = calculate_spread(
         latitude=fire.latitude,
         longitude=fire.longitude,
@@ -128,7 +128,7 @@ async def increase_wind():
         humidity=fire.humidity,
         temperature=fire.temperature,
         land_cover=fire.land_cover,
-        fire_id="FIRE-201",
+        fire_id="FIRE-101",
     )
     return {
         "action": "wind_increased",
@@ -141,7 +141,7 @@ async def increase_wind():
 @router.post("/increase-intensity")
 async def increase_intensity():
     simulation_state.increase_intensity()
-    fire = simulation_state.get_fire("FIRE-201")
+    fire = simulation_state.get_fire("FIRE-101")
     verification = calculate_verification(
         satellite_confidence=fire.confidence,
         frp=fire.frp,
@@ -170,13 +170,13 @@ async def increase_intensity():
 
 @router.post("/increase-population")
 async def increase_population():
-    """Simulate population exposure increase around FIRE-201."""
+    """Simulate population exposure increase around FIRE-101."""
     simulation_state.increase_population()
-    fire = simulation_state.get_fire("FIRE-201")
+    fire = simulation_state.get_fire("FIRE-101")
     return {
         "action": "population_increased",
         "new_population": fire.population_at_risk,
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
         "explanation": f"Evacuation perimeter expanded. Forest fringe population at risk increased to {fire.population_at_risk:,} people.",
     }
 
@@ -189,21 +189,21 @@ async def authorize_dispatch():
         "event": "Human authorization confirmed",
         "detail": "Forest incident commander authorized dispatch — Unit WF-10 deployed",
         "icon": "check",
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
     })
     simulation_state.add_timeline_event({
         "time": _now(),
         "event": "Unit dispatched",
         "detail": "Unit WF-10 (Wildland Fire Engine) en route from Aravalli Range Forest Post",
         "icon": "truck",
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
     })
     simulation_state.add_timeline_event({
         "time": _now(),
         "event": "Response monitored",
         "detail": "Real-time forest corridor telemetry active — ETA 6.5 min",
         "icon": "route",
-        "fire_id": "FIRE-201",
+        "fire_id": "FIRE-101",
     })
     return {
         "action": "dispatch_authorized",
@@ -326,9 +326,9 @@ async def simulate_new_fire(req: SimulateFireRequest):
 
 @router.post("/reset")
 async def reset_scenario():
-    """Reset to primary FIRE-201 forest fire demo scenario."""
+    """Reset to primary FIRE-101 forest fire demo scenario."""
     simulation_state.reset()
-    return {"action": "reset", "message": "Scenario reset to primary FIRE-201 forest fire demo state"}
+    return {"action": "reset", "message": "Scenario reset to primary FIRE-101 forest fire demo state"}
 
 
 @router.get("/state")

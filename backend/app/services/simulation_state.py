@@ -32,30 +32,30 @@ class SimulationState:
         self.road_blocked: bool = False
         self.wind_multiplier: float = 1.0
         self.intensity_multiplier: float = 1.0
-        self._counter: int = 210
+        self._counter: int = 109
         self.timeline: List[dict] = self._initial_timeline()
         self.alerts: List[dict] = self._initial_alerts()
 
     def _initial_timeline(self) -> List[dict]:
         return [
-            {"time": "14:32", "event": "Fire detected", "detail": "NOAA-20 VIIRS satellite detected thermal anomaly at 28.32°N, 77.18°E in Aravalli Forest", "icon": "satellite", "fire_id": "FIRE-201"},
-            {"time": "14:33", "event": "Incident verified", "detail": "Sensor verification confirmed thermal anomaly in dry deciduous cover (Confidence 94%)", "icon": "shield", "fire_id": "FIRE-201"},
-            {"time": "14:34", "event": "Risk calculated", "detail": "Composite forest fire risk score calculated: 92/100", "icon": "alert", "fire_id": "FIRE-201"},
-            {"time": "14:34", "event": "Fire severity classified", "detail": "Classified as CRITICAL severity (dry leaf fuel & wildlife corridor buffer)", "icon": "fire", "fire_id": "FIRE-201"},
-            {"time": "14:35", "event": "Fire spread estimated", "detail": "Simulated spread envelope: +15m (1.8 km) and +30m (3.4 km) projected downwind", "icon": "wind", "fire_id": "FIRE-201"},
-            {"time": "14:35", "event": "Resource recommended", "detail": "Unit WF-10 (Wildland Fire Engine) matched with lowest response cost", "icon": "truck", "fire_id": "FIRE-201"},
-            {"time": "14:36", "event": "Route optimized", "detail": "Primary forest ridge trail cleared (ETA 6.5 min)", "icon": "route", "fire_id": "FIRE-201"},
-            {"time": "14:37", "event": "Human authorization pending", "detail": "Forest division incident commander review required before dispatch", "icon": "user", "fire_id": "FIRE-201"},
+            {"time": "14:32", "event": "Fire detected", "detail": "NOAA-20 VIIRS satellite detected thermal anomaly at 28.32°N, 77.18°E in Aravalli Forest", "icon": "satellite", "fire_id": "FIRE-101"},
+            {"time": "14:33", "event": "Incident verified", "detail": "Sensor verification confirmed thermal anomaly in dry deciduous cover (Confidence 94%)", "icon": "shield", "fire_id": "FIRE-101"},
+            {"time": "14:34", "event": "Risk calculated", "detail": "Composite forest fire risk score calculated: 92/100", "icon": "alert", "fire_id": "FIRE-101"},
+            {"time": "14:34", "event": "Fire severity classified", "detail": "Classified as CRITICAL severity (dry leaf fuel & wildlife corridor buffer)", "icon": "fire", "fire_id": "FIRE-101"},
+            {"time": "14:35", "event": "Fire spread estimated", "detail": "Simulated spread envelope: +15m (1.8 km) and +30m (3.4 km) projected downwind", "icon": "wind", "fire_id": "FIRE-101"},
+            {"time": "14:35", "event": "Resource recommended", "detail": "Unit WF-10 (Wildland Fire Engine) matched with lowest response cost", "icon": "truck", "fire_id": "FIRE-101"},
+            {"time": "14:36", "event": "Route optimized", "detail": "Primary forest ridge trail cleared (ETA 6.5 min)", "icon": "route", "fire_id": "FIRE-101"},
+            {"time": "14:37", "event": "Human authorization pending", "detail": "Forest division incident commander review required before dispatch", "icon": "user", "fire_id": "FIRE-101"},
         ]
 
     def _initial_alerts(self) -> List[dict]:
         return [
             {
                 "id": "ALERT-001",
-                "fire_id": "FIRE-201",
+                "fire_id": "FIRE-101",
                 "severity": "CRITICAL",
                 "title": "CRITICAL FOREST FIRE ALERT",
-                "location": "28.32°N, 77.18°E — Aravalli Forest Region, Haryana",
+                "location": "28.32°N, 77.18°E — Aravalli Forest Range, Haryana",
                 "confidence": 94,
                 "risk": "CRITICAL",
                 "risk_score": 92,
@@ -147,7 +147,7 @@ class SimulationState:
 
     def increase_population(self):
         for f in self._fires:
-            if f["id"] == "FIRE-201":
+            if f["id"] == "FIRE-101":
                 f["population_at_risk"] = int(f["population_at_risk"] * 1.6)
                 break
         self.timeline.append({
@@ -155,7 +155,7 @@ class SimulationState:
             "event": "Population exposure increased",
             "detail": "Nearby forest fringe evacuation perimeter expanded — population exposure escalated",
             "icon": "alert",
-            "fire_id": "FIRE-201",
+            "fire_id": "FIRE-101",
         })
 
     def add_fire(self, fire_dict: dict):
@@ -182,7 +182,7 @@ class SimulationState:
         self.road_blocked = False
         self.wind_multiplier = 1.0
         self.intensity_multiplier = 1.0
-        self._counter = 200
+        self._counter = 109
         self.timeline = self._initial_timeline()
         self.alerts = self._initial_alerts()
 

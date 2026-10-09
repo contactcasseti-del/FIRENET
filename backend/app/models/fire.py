@@ -14,7 +14,7 @@ class FireHotspot(BaseModel):
     acquisition_date: str = ""
     acquisition_time: str = ""
     day_night: str = "D"
-    land_cover: str = "unknown"
+    land_cover: str = "forest"
     severity: str = "MEDIUM"
     status: str = "ACTIVE"
     population_at_risk: int = 0
@@ -28,11 +28,14 @@ class FireHotspot(BaseModel):
     temperature: float = 30.0
     assigned_unit: Optional[str] = None
     eta_minutes: Optional[float] = None
-    area_name: str = "Unknown Area"
-    state: str = "Unknown"
-    fuel_type: Optional[str] = "Dry Deciduous Forest"
+    area_name: str = "Aravalli Forest Range, Haryana"
+    state: str = "Haryana"
+    fuel_type: Optional[str] = "Dry Deciduous Forest Litter"
     terrain_type: Optional[str] = "Forest Ridge"
     ecosystem_zone: Optional[str] = "Wildlife Sanctuary Buffer"
+    forest_division: Optional[str] = "Aravalli Forest Division"
+    estimated_forest_area_ha: Optional[float] = 350.0
+    is_simulated: bool = True
 
 
 class FireHotspotCreate(BaseModel):
@@ -46,7 +49,10 @@ class FireHotspotCreate(BaseModel):
     temperature: float = 35.0
     land_cover: str = "forest"
     area_name: str = "Simulated Forest Hotspot"
-    state: str = "India"
-    fuel_type: str = "Dry Deciduous Forest"
+    state: str = "Haryana"
+    fuel_type: str = "Dry Deciduous Forest Litter"
     terrain_type: str = "Forest Ridge"
     ecosystem_zone: str = "Wildlife Sanctuary Buffer"
+    forest_division: str = "Forest Division"
+    estimated_forest_area_ha: float = 200.0
+    is_simulated: bool = True

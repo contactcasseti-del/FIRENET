@@ -11,7 +11,7 @@ settings = get_settings()
 
 app = FastAPI(
     title="FIRENET API",
-    description="AI-Powered Fire Emergency Response & Coordination System — Decision Support Platform",
+    description="AI-Powered Forest Fire Detection, Risk Assessment & Emergency Response Coordination — Decision Support Platform",
     version="1.0.0",
 )
 
@@ -40,10 +40,10 @@ async def root():
     return {
         "service": "FIRENET",
         "version": "1.0.0",
-        "description": "AI-Powered Fire Emergency Response & Coordination System",
+        "description": "AI-Powered Forest Fire Detection, Risk Assessment & Emergency Response Coordination",
         "demo_mode": not bool(settings.nasa_firms_map_key),
         "status": "operational",
-        "disclaimer": "FIRENET is a decision-support system for fire emergency operations. All emergency unit dispatches require explicit human authorization.",
+        "disclaimer": "FIRENET is a decision-support system for wildfire emergency operations. All emergency unit dispatches require explicit human authorization.",
     }
 
 
